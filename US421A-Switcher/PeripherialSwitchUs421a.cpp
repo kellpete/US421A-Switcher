@@ -22,6 +22,23 @@ std::string GetErrorMessage(DWORD error_code) {
 	return message;
 }
 
+std::string StatusUs421a::ToString()
+{
+  std::stringstream s;
+  s << "Raw Status (hex): " << hex << setfill('0') << std::setw(2);
+  s << std::setw(2) << static_cast<int>(raw_status[0]) << " ";
+  s << std::setw(2) << static_cast<int>(raw_status[1]) << " ";
+  s << std::setw(2) << static_cast<int>(raw_status[2]) << " ";
+  s << std::setw(2) << static_cast<int>(raw_status[3]) << endl;
+
+  s << "SelfSelected:" << self_selected();
+  s << " SelfLock:" << self_locked();
+  s << " SwitchRequested:" << switch_requested();
+  s << " Beeper:" << beeper_enabled();
+
+  return s.str();
+}
+
 PeripherialSwitchUs421a::PeripherialSwitchUs421a(std::wstring path) : path_{ path }
 {
 	file_handle_ = CreateFile(path_.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
@@ -41,37 +58,15 @@ PeripherialSwitchUs421a::~PeripherialSwitchUs421a()
 }
 
 StatusUs421a PeripherialSwitchUs421a::ReadStatus() {
-	uint8_t read_buffer[4];
+	std::array<uint8_t, 4> read_buffer;
 	DWORD bytes_read;
-	const BOOL read_ok = ReadFile(file_handle_, read_buffer, 4, &bytes_read, nullptr);
+	const BOOL read_ok = ReadFile(file_handle_, read_buffer.data(), 4, &bytes_read, nullptr);
 	if (!read_ok) {
 		DWORD error_code = GetLastError();
 		throw runtime_error("Failed to read from device. " + GetErrorMessage(error_code));
 	}
 
-	cout << "Raw Status (hex): " << hex  << setfill('0') << std::setw(2);
-	cout << std::setw(2) << (int)read_buffer[0] << " ";
-	cout << std::setw(2) << (int)read_buffer[1] << " ";
-	cout << std::setw(2) << (int)read_buffer[2] << " ";
-	cout << std::setw(2) << (int)read_buffer[3] << endl;
-
-	StatusUs421a s{};
-	s.self_selected = (read_buffer[1] & 0x01) != 0;
-	s.self_locked = (read_buffer[1] & 0x02) != 0;
-	s.beeper_enabled = (read_buffer[3] & 0x01) != 0;
-
-	// Interpretation of byte 2 below seems incorrect
-	// Looks like bit 2.0 means something like "busy" (active during a switch)
-	if (read_buffer[2] != 0) {
-		s.port_info_available = true;
-		s.selected_port = (read_buffer[2] >> 2) & 0b11;
-
-		uint8_t connect_nibble = read_buffer[2] >> 4;
-		for (size_t i = 0; i < 4; i++)
-		{
-			s.connected_ports[i] = (connect_nibble >> i) & 0x01;
-		}
-	}
+	StatusUs421a s{read_buffer};
 	return s;
 }
 
@@ -89,6 +84,12 @@ void PeripherialSwitchUs421a::Select()
 {
 	uint8_t cmd[]{ 0x02, 0x11 };
 	SendCommand(cmd);
+}
+
+void PeripherialSwitchUs421a::CancelSwitchRequest()
+{
+  uint8_t cmd[]{ 0x02, 0x10 };
+  SendCommand(cmd);
 }
 
 void PeripherialSwitchUs421a::Lock()

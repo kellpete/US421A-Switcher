@@ -1,31 +1,28 @@
 #pragma once
+#include <array>
 #include <string>
 #include <vector>
 #include <sstream>
 
 struct StatusUs421a {
-	bool self_selected;
-	bool self_locked;
-	bool beeper_enabled;
-	
-	bool port_info_available; // Unfortunately, this is only available when connected to first port
-	int selected_port;
-	bool connected_ports[4];
+    StatusUs421a(std::array<uint8_t, 4> raw) : raw_status{ raw } {  }
 
-	std::string ToString() {
-	  std::stringstream s;
-	  s << "SelfSelected:" << self_selected << " Lock:" << self_locked << " Beeper:" << beeper_enabled;
-	  if (port_info_available) {
-		s << " Selected: " << selected_port;
-		s << " Host ports connected: ";
-		for (int i = 0; i < 4; ++i) {
-		  if (connected_ports[i]) {
-			s << i << " ";
-		  }
-		}
-	  }
-	  return s.str();
+	bool self_selected() const {
+	  return raw_status[1] & 0x01;
 	}
+	bool self_locked() const {
+	  return raw_status[1] & 0x02;
+	}
+	bool switch_requested() const {
+	  return raw_status[1] & 0x04;
+	}
+	bool beeper_enabled() const {
+	  return raw_status[3] & 0x01;
+	}
+	
+    std::string ToString();
+
+	const std::array<uint8_t, 4> raw_status;
 };
 
 class PeripherialSwitchUs421a
@@ -39,7 +36,11 @@ public:
 	
 	// Selects own port, so that device can be used. Takes a few seconds to complete.
 	// Also, the Aten US421A controller will re-enumerate, so don't use this instance anymore after Select()!
+    // If the device is locked by another host, this will only set the "switch requested" bit (see status). As soon as the other host unlocks, the device switches to this host
 	void Select();
+
+    // Clears the "switch requested" bit
+	void CancelSwitchRequest();
 
 	// Locks for 10 seconds
 	void Lock();
