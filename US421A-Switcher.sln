@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "US421A-Switcher", "US421A-Switcher\US421A-Switcher.vcxproj", "{5AA7008B-C4DF-415D-9324-648FF6DE735F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Debug|x64.ActiveCfg = Debug|x64
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Debug|x64.Build.0 = Debug|x64
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Debug|x86.ActiveCfg = Debug|Win32
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Debug|x86.Build.0 = Debug|Win32
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Release|x64.ActiveCfg = Release|x64
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Release|x64.Build.0 = Release|x64
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Release|x86.ActiveCfg = Release|Win32
+		{5AA7008B-C4DF-415D-9324-648FF6DE735F}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CB7996E-215D-4403-AF21-9983BE25C10E}
+	EndGlobalSection
+EndGlobal
