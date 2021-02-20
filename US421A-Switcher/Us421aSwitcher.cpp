@@ -75,7 +75,7 @@ void SwitchAndKeepLocked()
 int main(int argc, const char* argv[])
 {
   cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripherial Switch " << endl;
-  cout << "Version 0.1" << endl;
+  cout << "Version 0.1" << endl << endl;
 
   try {
     if (argc == 1)
@@ -114,7 +114,12 @@ int main(int argc, const char* argv[])
     else
     {
       cout << "Usage:" << endl;
-      cout << "If executed without arguments, will try to switch to this host" << endl;
+      cout << "If no arguments are present, will request a switch to this host. If the US421A" << endl;;
+      cout << "is not locked by a foreign host, the switch will be executed before this utility" << endl;;
+      cout << "terminates. If a foreign host keeps a lock, the utility terminates immediately," << endl;;
+      cout << "and the request will be executed upon unlock from the foreign host" << endl;
+      cout << endl;
+      cout << "Options:" << endl;
       cout << "--lock       switches to this host and keeps a lock until the utility is terminated" << endl;
       cout << "--cancel     cancels a switch request" << endl;
       cout << "--status     shows device status" << endl;
