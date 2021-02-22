@@ -59,7 +59,7 @@ void SwitchAndKeepLocked() {
 
     cout << "Keeping lock. Use Ctrl-C to unlock and terminate" << endl;
     while (true) {
-        this_thread::sleep_for(1s);
+        this_thread::sleep_for(4s);
         usb_switch.LockKeepAlive();
         cout << usb_switch.ReadStatus().ToString() << endl;
     }

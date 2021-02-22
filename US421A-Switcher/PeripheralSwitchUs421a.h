@@ -40,7 +40,8 @@ public:
 
     // Selects own port, so that the USB device connected to the switch can be used from this host. Takes a few seconds to complete.
     // Also, the Aten US421A controller will re-enumerate, so don't use this instance anymore after Select()!
-    // If the device is locked by another host, this will only set the "switch requested" bit (see status). As soon as the other host unlocks, the device switches to this host
+    // If the device is locked by another host, this will only set the "switch requested" bit (see status). As soon as the other host unlocks,
+    // the device switches to this host (unless you cancel the request)
     void Select();
 
     // Clears the "switch requested" bit
