@@ -66,7 +66,7 @@ void SwitchAndKeepLocked() {
 
 int main(int argc, const char* argv[]) {
     cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripheral Switch" << endl;
-    cout << "Version 0.1" << endl << endl;
+    cout << "Version 1.0" << endl << endl;
 
     try {
         if (argc == 1) {
