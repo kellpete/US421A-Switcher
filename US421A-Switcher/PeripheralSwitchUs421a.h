@@ -25,11 +25,11 @@ struct StatusUs421a {
 	const std::array<uint8_t, 4> raw_status;
 };
 
-class PeripherialSwitchUs421a
+class PeripheralSwitchUs421a
 {
 public:
-	PeripherialSwitchUs421a(std::wstring path);
-	~PeripherialSwitchUs421a();
+	PeripheralSwitchUs421a(std::wstring path);
+	~PeripheralSwitchUs421a();
 
 	StatusUs421a ReadStatus();
 	void SendCommand(uint8_t* buf_size_2);
@@ -48,10 +48,10 @@ public:
 	// Unlocks the device within a few seconds (3 seconds according to status, 5 sec according to LEDs)
 	void Unlock();
 
-	// Keeps an existing lock alive for the next 10 seconds. (Aten's "Peripherial Switch Utility" sends this every 4s when locked)
+	// Keeps an existing lock alive for the next 10 seconds. (Aten's "Peripheral Switch Utility" sends this every 4s when locked)
 	void LockKeepAlive();
 
-	// Returns US421A device paths from which an PeripherialSwitchUs421a can be constructed
+	// Returns US421A device paths from which an PeripheralSwitchUs421a can be constructed
 	static std::vector<std::wstring> GetDeviceList();
 
 private:

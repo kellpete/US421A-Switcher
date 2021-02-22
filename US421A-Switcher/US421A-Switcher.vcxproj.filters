@@ -18,15 +18,15 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PeripherialSwitchUs421a.h">
+    <ClInclude Include="PeripheralSwitchUs421a.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PeripherialSwitchUs421a.cpp">
+    <ClCompile Include="Us421aSwitcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Us421aSwitcher.cpp">
+    <ClCompile Include="PeripheralSwitchUs421a.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

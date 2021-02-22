@@ -1,15 +1,15 @@
 // This file defines the entry point for the console application.
 //
 
-#include "PeripherialSwitchUs421a.h"
+#include "PeripheralSwitchUs421a.h"
 #include <iostream>
 #include <thread>
 
 using namespace std;
 
-PeripherialSwitchUs421a GetUsbSwitch()
+PeripheralSwitchUs421a GetUsbSwitch()
 {
-  auto list = PeripherialSwitchUs421a::GetDeviceList();
+  auto list = PeripheralSwitchUs421a::GetDeviceList();
 
   if (list.empty()) {
     cout << "No Aten US421A device found" << endl;
@@ -22,7 +22,7 @@ PeripherialSwitchUs421a GetUsbSwitch()
 void SwitchToThisPC()
 {
   {
-    PeripherialSwitchUs421a usb_switch = GetUsbSwitch();
+    PeripheralSwitchUs421a usb_switch = GetUsbSwitch();
     const auto status = usb_switch.ReadStatus();
     if (!status.self_selected()) {
       usb_switch.Select();
@@ -39,10 +39,10 @@ void SwitchToThisPC()
 
   for (int i = 0; i < 10; ++i)
   {
-    auto list = PeripherialSwitchUs421a::GetDeviceList();
+    auto list = PeripheralSwitchUs421a::GetDeviceList();
     if (!list.empty())
     {
-      PeripherialSwitchUs421a usb_switch = GetUsbSwitch();
+      PeripheralSwitchUs421a usb_switch = GetUsbSwitch();
       if(!usb_switch.ReadStatus().self_selected())
       {
         throw runtime_error("Cannot switch to this host");
@@ -60,7 +60,7 @@ void SwitchAndKeepLocked()
 {
   SwitchToThisPC();
 
-  PeripherialSwitchUs421a usb_switch = GetUsbSwitch();
+  PeripheralSwitchUs421a usb_switch = GetUsbSwitch();
   cout << "Locking" << endl;
   usb_switch.Lock();
 
@@ -74,7 +74,7 @@ void SwitchAndKeepLocked()
 
 int main(int argc, const char* argv[])
 {
-  cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripherial Switch " << endl;
+  cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripheral Switch " << endl;
   cout << "Version 0.1" << endl << endl;
 
   try {

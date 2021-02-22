@@ -1,4 +1,4 @@
-#include "PeripherialSwitchUs421a.h"
+#include "PeripheralSwitchUs421a.h"
 #include <Windows.h>
 #include <hidsdi.h>
 #include <SetupAPI.h>
@@ -39,7 +39,7 @@ std::string StatusUs421a::ToString()
   return s.str();
 }
 
-PeripherialSwitchUs421a::PeripherialSwitchUs421a(std::wstring path) : path_{ path }
+PeripheralSwitchUs421a::PeripheralSwitchUs421a(std::wstring path) : path_{ path }
 {
 	file_handle_ = CreateFile(path_.c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 	DWORD error_code_create_file = GetLastError();
@@ -49,7 +49,7 @@ PeripherialSwitchUs421a::PeripherialSwitchUs421a(std::wstring path) : path_{ pat
 	}
 }
 
-PeripherialSwitchUs421a::~PeripherialSwitchUs421a()
+PeripheralSwitchUs421a::~PeripheralSwitchUs421a()
 {
 	if (file_handle_ != 0) {
 		CloseHandle(file_handle_);
@@ -57,7 +57,7 @@ PeripherialSwitchUs421a::~PeripherialSwitchUs421a()
 	}
 }
 
-StatusUs421a PeripherialSwitchUs421a::ReadStatus() {
+StatusUs421a PeripheralSwitchUs421a::ReadStatus() {
 	std::array<uint8_t, 4> read_buffer;
 	DWORD bytes_read;
 	const BOOL read_ok = ReadFile(file_handle_, read_buffer.data(), 4, &bytes_read, nullptr);
@@ -70,7 +70,7 @@ StatusUs421a PeripherialSwitchUs421a::ReadStatus() {
 	return s;
 }
 
-void PeripherialSwitchUs421a::SendCommand(uint8_t * buf_size_2)
+void PeripheralSwitchUs421a::SendCommand(uint8_t * buf_size_2)
 {
 	DWORD bytes_written;
 	const BOOL write_ok = WriteFile(file_handle_, buf_size_2, 2, &bytes_written, nullptr);
@@ -80,37 +80,37 @@ void PeripherialSwitchUs421a::SendCommand(uint8_t * buf_size_2)
 	}
 }
 
-void PeripherialSwitchUs421a::Select()
+void PeripheralSwitchUs421a::Select()
 {
 	uint8_t cmd[]{ 0x02, 0x11 };
 	SendCommand(cmd);
 }
 
-void PeripherialSwitchUs421a::CancelSwitchRequest()
+void PeripheralSwitchUs421a::CancelSwitchRequest()
 {
   uint8_t cmd[]{ 0x02, 0x10 };
   SendCommand(cmd);
 }
 
-void PeripherialSwitchUs421a::Lock()
+void PeripheralSwitchUs421a::Lock()
 {
 	uint8_t cmd[]{ 0x02, 0x21 };
 	SendCommand(cmd);
 }
 
-void PeripherialSwitchUs421a::Unlock()
+void PeripheralSwitchUs421a::Unlock()
 {
 	uint8_t cmd[]{ 0x02, 0x20 };
 	SendCommand(cmd);
 }
 
-void PeripherialSwitchUs421a::LockKeepAlive()
+void PeripheralSwitchUs421a::LockKeepAlive()
 {
 	uint8_t cmd[]{ 0x02, 0x40 };
 	SendCommand(cmd);
 }
 
-std::vector<std::wstring> PeripherialSwitchUs421a::GetDeviceList() {
+std::vector<std::wstring> PeripheralSwitchUs421a::GetDeviceList() {
 	vector<wstring> device_list;
 	GUID hid_guid;
 	HidD_GetHidGuid(&hid_guid);

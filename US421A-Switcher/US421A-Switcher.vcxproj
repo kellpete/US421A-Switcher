@@ -147,11 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PeripherialSwitchUs421a.h" />
+    <ClInclude Include="PeripheralSwitchUs421a.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PeripherialSwitchUs421a.cpp" />
+    <ClCompile Include="PeripheralSwitchUs421a.cpp" />
     <ClCompile Include="Us421aSwitcher.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
