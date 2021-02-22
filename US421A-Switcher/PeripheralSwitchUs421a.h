@@ -24,7 +24,7 @@ struct StatusUs421a
         return raw_status_[3] & 0x01;
     }
 
-    std::string ToString();
+    std::string ToString() const;
 
     const std::array<uint8_t, 4> raw_status_;
 };

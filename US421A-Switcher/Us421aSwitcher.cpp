@@ -24,7 +24,7 @@ void SwitchToThisPC() {
         const auto status = usb_switch.ReadStatus();
         if (!status.self_selected()) {
             usb_switch.Select();
-            cout << "Switching to this Host" << endl;
+            cout << "Switching to this host" << endl;
         }
         else {
             cout << "No switching needed - this host is already the owner" << endl;
@@ -61,12 +61,11 @@ void SwitchAndKeepLocked() {
     while (true) {
         this_thread::sleep_for(4s);
         usb_switch.LockKeepAlive();
-        cout << usb_switch.ReadStatus().ToString() << endl;
     }
 }
 
 int main(int argc, const char* argv[]) {
-    cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripheral Switch " << endl;
+    cout << "US421A-Switcher: A simple command line utility to control the Aten US421A USB 2.0 Peripheral Switch" << endl;
     cout << "Version 0.1" << endl << endl;
 
     try {
@@ -100,9 +99,9 @@ int main(int argc, const char* argv[]) {
         }
         else {
             cout << "Usage:" << endl;
-            cout << "If no arguments are present, will request a switch to this host. If the US421A" << endl;;
-            cout << "is not locked by a foreign host, the switch will be executed before this utility" << endl;;
-            cout << "terminates. If a foreign host keeps a lock, the utility terminates immediately," << endl;;
+            cout << "If no arguments are present, will request a switch to this host. If the US421A" << endl;
+            cout << "is not locked by a foreign host, the switch will be executed before this utility" << endl;
+            cout << "terminates. If a foreign host keeps a lock, the utility terminates immediately," << endl;
             cout << "and the request will be executed upon unlock from the foreign host" << endl;
             cout << endl;
             cout << "Options:" << endl;

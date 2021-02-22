@@ -22,7 +22,7 @@ std::string GetErrorMessage(DWORD error_code) {
     return message;
 }
 
-std::string StatusUs421a::ToString() {
+std::string StatusUs421a::ToString() const {
     std::stringstream s;
     s << "Raw Status (hex): " << hex << setfill('0') << std::setw(2);
     s << std::setw(2) << static_cast<int>(raw_status_[0]) << " ";
@@ -48,14 +48,14 @@ PeripheralSwitchUs421a::PeripheralSwitchUs421a(std::wstring path) : path_{path} 
 }
 
 PeripheralSwitchUs421a::~PeripheralSwitchUs421a() {
-    if (file_handle_ != 0) {
+    if (file_handle_ != nullptr) {
         CloseHandle(file_handle_);
         file_handle_ = nullptr;
     }
 }
 
 StatusUs421a PeripheralSwitchUs421a::ReadStatus() {
-    std::array<uint8_t, 4> read_buffer;
+    std::array<uint8_t, 4> read_buffer{};
     DWORD bytes_read;
     const BOOL read_ok = ReadFile(file_handle_, read_buffer.data(), 4, &bytes_read, nullptr);
     if (!read_ok) {
@@ -71,7 +71,7 @@ void PeripheralSwitchUs421a::SendCommand(uint8_t* buf_size_2) {
     DWORD bytes_written;
     const BOOL write_ok = WriteFile(file_handle_, buf_size_2, 2, &bytes_written, nullptr);
     if (!write_ok) {
-        DWORD error_code = GetLastError();
+        const DWORD error_code = GetLastError();
         throw runtime_error("Failed to send command to device. " + GetErrorMessage(error_code));
     }
 }
@@ -106,7 +106,7 @@ std::vector<std::wstring> PeripheralSwitchUs421a::GetDeviceList() {
     GUID hid_guid;
     HidD_GetHidGuid(&hid_guid);
 
-    auto dev_info_handle = SetupDiGetClassDevs(&hid_guid, nullptr, nullptr, DIGCF_DEVICEINTERFACE | DIGCF_PRESENT);
+    const auto dev_info_handle = SetupDiGetClassDevs(&hid_guid, nullptr, nullptr, DIGCF_DEVICEINTERFACE | DIGCF_PRESENT);
 
     int dev_index = 0;
     SP_DEVICE_INTERFACE_DATA dev_if_data{};
