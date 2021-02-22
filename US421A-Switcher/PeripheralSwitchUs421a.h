@@ -34,6 +34,11 @@ class PeripheralSwitchUs421a
 public:
     PeripheralSwitchUs421a(std::wstring path);
     ~PeripheralSwitchUs421a();
+    
+    PeripheralSwitchUs421a(const PeripheralSwitchUs421a& other) = delete;
+    PeripheralSwitchUs421a(PeripheralSwitchUs421a&& other) noexcept = default;
+    PeripheralSwitchUs421a& operator=(const PeripheralSwitchUs421a& other) = delete;
+    PeripheralSwitchUs421a& operator=(PeripheralSwitchUs421a&& other) noexcept = delete; // Not possible, const member...
 
     StatusUs421a ReadStatus();
     void SendCommand(uint8_t* buf_size_2);
